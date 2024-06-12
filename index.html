@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>z-text converter</title>
+</head>
+<body>
+<label for="plainTextarea">Plain Text</label>
+<textarea id="plainTextarea" rows="2" cols="40"></textarea>
+<label for="zTextarea">zZz Text</label>
+<textarea id="zTextarea" rows="10" cols="40"></textarea>
+<button id="resetButton">Reset</button>
+<script>
+    // copyright disclaimed consistent with Creative Commons CC0
+    // this code is an attempt at humorous personal expression, and should not be taken seriously for any purpose
+const element = (id) => (window.document.getElementById(id));
+// A.... showed me some python for the 'decryption' portion
+const decryptLetter = (zWord) => (
+  String.fromCharCode(
+      parseInt(zWord.replaceAll('z','0').replaceAll('Z','1'), 2)
+  )
+);
+const decrypt = (zText) => {
+    try {
+        return zText
+            .split(' ')
+            .map(decryptLetter)
+            .join('')
+    } catch(e) {
+        console.log('decrypt error');
+        console.log(e);
+        return 'Error: invalid';
+    }
+};
+const encryptLetter = (c) => (
+  Number(c.charCodeAt(0))
+      .toString(2)
+      .replaceAll('1','Z')
+      .replaceAll('0','z')
+);
+const encrypt = (words) => (
+  words
+      .split('')
+      .map(encryptLetter)
+      .join(' ')
+);
+window.onload=()=>{
+    const [
+        resetButton,
+        plainTextarea,
+        zTextarea
+    ] = [
+        'resetButton',
+        'plainTextarea',
+        'zTextarea'
+    ].map(element);
+    resetButton.onclick = ()=>{
+        plainTextarea.value = '';
+        zTextarea.value = '';
+    };
+    plainTextarea.onkeyup = ()=>{
+        const plainText = plainTextarea.value;
+        zTextarea.value = encrypt(plainText);
+    };
+    zTextarea.onkeyup = ()=>{
+        const zText = zTextarea.value;
+        plainTextarea.value = decrypt(zText);
+    };
+};
+</script>
+</body>
+</html>
