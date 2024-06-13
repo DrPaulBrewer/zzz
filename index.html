@@ -56,26 +56,30 @@ window.onload=()=>{
         'incrButton',
         'decrButton'
     ].map(element);
+    const doEncrypt = ()=>{
+        zTextarea.value = encrypt(plainTextarea.value);
+    };
+    const doDecrypt = ()=>{
+        plainTextarea.value = decrypt(zTextarea.value);
+    };
     resetButton.onclick = ()=>{
         plainTextarea.value = '';
         zTextarea.value = '';
     };
-    plainTextarea.onkeyup = ()=>{
-        zTextarea.value = encrypt(plainTextarea.value);
-    };
-    zTextarea.onkeyup = ()=>{
-        plainTextarea.value = decrypt(zTextarea.value);
-    };
+    plainTextarea.onkeyup = doEncrypt;
+    zTextarea.onkeyup = doDecrypt;
     incrButton.onclick = ()=>{
         const zText = zTextarea.value;
         if (zText?.length > 0){
             plainTextarea.value = zText;
+            doEncrypt();
         }
     };
     decrButton.onclick = ()=>{
         const plainText = plainTextarea.value;
         if ((plainText.length > 0) && (plainText.includes("Z"))){
             zTextarea.value = plainText;
+            doDecrypt();
         }
     };
 };
