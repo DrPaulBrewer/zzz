@@ -17,7 +17,7 @@ const element = (id) => (window.document.getElementById(id));
 // A.... showed me some python for the 'decryption' portion
 const decryptLetter = (zWord) => {
   const charCode = parseInt(zWord.replaceAll('z','0').replaceAll('Z','1'), 2);
-  if (Number.isNaN(charCode){
+  if (Number.isNaN(charCode)){
       return zWord;
   }
   return String.fromCharCode(charCode);
