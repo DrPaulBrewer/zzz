@@ -10,6 +10,8 @@
 <label for="zTextarea">zZz Text</label>
 <textarea id="zTextarea" rows="10" cols="40" autocorrect="off" spellcheck="false" autocapitalize="off"></textarea>
 <button id="resetButton">Reset</button>
+<button id="incrButton">++</button>
+<button id="decrButton">--</button>
 <script>
     // copyright disclaimed consistent with Creative Commons CC0
     // this code is an attempt at humorous personal expression, and should not be taken seriously for any purpose
@@ -44,23 +46,37 @@ window.onload=()=>{
     const [
         resetButton,
         plainTextarea,
-        zTextarea
+        zTextarea,
+        incrButton,
+        decrButton
     ] = [
         'resetButton',
         'plainTextarea',
-        'zTextarea'
+        'zTextarea',
+        'incrButton',
+        'decrButton'
     ].map(element);
     resetButton.onclick = ()=>{
         plainTextarea.value = '';
         zTextarea.value = '';
     };
     plainTextarea.onkeyup = ()=>{
-        const plainText = plainTextarea.value;
-        zTextarea.value = encrypt(plainText);
+        zTextarea.value = encrypt(plainTextarea.value);
     };
     zTextarea.onkeyup = ()=>{
+        plainTextarea.value = decrypt(zTextarea.value);
+    };
+    incrButton.onclick = ()=>{
         const zText = zTextarea.value;
-        plainTextarea.value = decrypt(zText);
+        if (zText?.length > 0){
+            plainTextarea.value = zText;
+        }
+    };
+    decrButton.onclick = ()=>{
+        const plainText = plainTextarea.value;
+        if ((plainText?.length > 0) && (plainText.includes("Z")){
+            zTextarea.value = plainText;
+        }
     };
 };
 </script>
