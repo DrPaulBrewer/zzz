@@ -15,23 +15,19 @@
     // this code is an attempt at humorous personal expression, and should not be taken seriously for any purpose
 const element = (id) => (window.document.getElementById(id));
 // A.... showed me some python for the 'decryption' portion
-const decryptLetter = (zWord) => (
-  String.fromCharCode(
-      parseInt(zWord.replaceAll('z','0').replaceAll('Z','1'), 2)
-  )
-);
-const decrypt = (zText) => {
-    try {
-        return zText
-            .split(' ')
-            .map(decryptLetter)
-            .join('')
-    } catch(e) {
-        console.log('decrypt error');
-        console.log(e);
-        return 'Error: invalid';
-    }
+const decryptLetter = (zWord) => {
+  const charCode = parseInt(zWord.replaceAll('z','0').replaceAll('Z','1'), 2);
+  if (Number.isNaN(charCode){
+      return zWord;
+  }
+  return String.fromCharCode(charCode);
 };
+const decrypt = (zText) => (
+    zText
+        .split(' ')
+        .map(decryptLetter)
+        .join('')
+);
 const encryptLetter = (c) => (
   Number(c.charCodeAt(0))
       .toString(2)
